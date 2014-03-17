@@ -1,5 +1,10 @@
-import vim
 import argparse
+import vim
+
+
+def github_url(path):
+    # TODO: Based off variable for enterprise
+    return "https://api.github.com/%s" % path
 
 
 def main(args):
