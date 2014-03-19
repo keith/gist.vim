@@ -11,7 +11,7 @@ let g:loaded_gist = 1
 function s:Gist(count, line1, line2, ...)
   let args = a:000 + ["--count", a:count] +
         \ ["--line1", a:line1] + ["--line2", a:line2]
-  let file = expand('<sfile>:p:h') . '/python/gist.py'
+  let file = expand('<sfile>:p:h') . '/gist/gist.py'
   execute 'pyfile ' . file
   execute 'python main("' . join(args, " ") . '")'
 endfunction
