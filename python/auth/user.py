@@ -7,7 +7,7 @@ class User(object):
     password = None
     url = None
 
-    def __init__(self, username=None, password=None, url=None):
+    def __init__(self, username, password, url=None):
         self.username = username
         self.password = password
         self.url = url
@@ -26,7 +26,10 @@ class User(object):
     @classmethod
     def from_netrc(cls, path=None, url=None):
         rc = netrc.netrc(path)
-        login, account, password = rc.authenticators(url)
+        creds = rc.authenticators(url)
+        if not creds:
+            return None
+        login, account, password = creds
         if not login:
             login = account
         if not login or not password:
