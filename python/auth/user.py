@@ -12,6 +12,9 @@ class User(object):
         self.password = password
         self.url = url
 
+    def __str__(self):
+        return "Username: %s, URL: %s" % (self.username, self.url)
+
     @classmethod
     def authorize(cls, username, password, url, save=True):
         p = urllib2.HTTPPasswordMgrWithDefaultRealm()
