@@ -6,13 +6,14 @@ if exists('g:loaded_gist') && g:loaded_gist
   finish
 endif
 let g:loaded_gist = 1
+let s:plug = expand("<sfile>:p:h:h")
 
 " Pass the arguments from the Vim CLI to python
 function s:Gist(count, line1, line2, ...)
   let args = a:000 + ["--count", a:count] +
         \ ["--line1", a:line1] + ["--line2", a:line2]
-  let file = expand('<sfile>:p:h') . '/gist/gist.py'
-  execute 'pyfile ' . file
+  let script = s:plug . '/gist/gist.py'
+  execute 'pyfile ' . script
   execute 'python main("' . join(args, " ") . '")'
 endfunction
 
