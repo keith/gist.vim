@@ -1,10 +1,11 @@
 import argparse
+import urllib2
+import base64
 import os.path
 import os
 from gist.auth import user
 import vim
 import json
-import requests
 
 
 def github_url(path):
@@ -21,14 +22,13 @@ def main(args):
     vim.eval("inputrestore()")
     data['description'] = desc
     u = user.User.from_netrc(url="github.com")
-    headers = {'Accept': 'application/vnd.github.v3+json',
-               'Content-type': 'application/json'}
-    response = requests.post(github_url("gists"),
-                             data=json.dumps(data),
-                             auth=(u.username, u.password),
-                             headers=headers)
-
-    j = response.json()
+    request = urllib2.Request(github_url("gists"))
+    auth = base64.standard_b64encode("%s:%s" % (u.username, u.password))
+    request.add_header("Authorization", "Basic %s" % auth)
+    pipe = urllib2.urlopen(request, json.dumps(data))
+    response = pipe.read()
+    pipe.close()
+    j = json.loads(response)
     os.system("open " + j["html_url"])
 
 
