@@ -1,29 +1,35 @@
 import argparse
 import os.path
+import os
 from gist.auth import user
 import vim
 import json
+import requests
 
 
 def github_url(path):
-    # TODO: Based off variable for enterprise
-    return "https://api.github.com/%s" % path
+    url = vim.vars.get("gist_base_url", "https://api.github.com/")
+    return os.path.join(url, "gists")
 
 
 def main(args):
     name = parser.parse_args(args.split())
-    # print name
-    # parser.print_help()
     data = {'public': name.public}
     data['files'] = get_files(name)
     vim.eval("inputsave()")
     desc = vim.eval("inputdialog('Description: ')")
     vim.eval("inputrestore()")
     data['description'] = desc
-    # print json.dumps(data)
-    # TODO: request
     u = user.User.from_netrc(url="github.com")
-    print u
+    headers = {'Accept': 'application/vnd.github.v3+json',
+               'Content-type': 'application/json'}
+    response = requests.post(github_url("gists"),
+                             data=json.dumps(data),
+                             auth=(u.username, u.password),
+                             headers=headers)
+
+    j = response.json()
+    os.system("open " + j["html_url"])
 
 
 def get_files(args):
@@ -49,10 +55,9 @@ def get_files(args):
 
 
 def text_from_buffer(b, l1, l2):
-    # TODO: Must join strings in array by newline
     if l1 > 0:
         l1 -= 1
-    return b[l1:l2]
+    return {'content': '\n'.join(b[l1:l2])}
 
 
 def buffer_filename(b):
@@ -60,7 +65,7 @@ def buffer_filename(b):
 
 
 def is_directory(b):
-    return int(vim.eval("isdirectory(expand('%s'))" % b.name)) == 1
+    return os.path.isdir(b.name)
 
 
 if __name__ == "__main__":
