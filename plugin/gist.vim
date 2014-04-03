@@ -13,6 +13,8 @@ function s:Gist(count, line1, line2, ...)
   let args = a:000 + ["--count", a:count] +
         \ ["--line1", a:line1] + ["--line2", a:line2]
   let script = s:plug . '/gist/gist.py'
+  execute 'python import sys'
+  execute 'python sys.path.append("' . s:plug . '")'
   execute 'pyfile ' . script
   execute 'python main("' . join(args, " ") . '")'
 endfunction
