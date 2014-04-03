@@ -2,16 +2,18 @@
 Create gists straight from Vim
 Maintained by: Keith Smiley <http://keith.so>
 """
+
 from gist.auth import user
 import argparse
 import base64
+import distutils.spawn
 import json
 import os
 import os.path
-import urllib2
-import vim
 import subprocess
 import sys
+import urllib2
+import vim
 
 
 def main(args):
@@ -40,7 +42,9 @@ def main(args):
     except ValueError:
         print("Failed to decode the response to JSON")
     else:
-        open_url(j["html_url"])
+        url = j["html_url"]
+        open_url(url, browser=name.open_browser)
+        save_url(url)
 
 
 def netrc_path(default=False):
@@ -93,15 +97,41 @@ def github_url(path=""):
     return os.path.join(url, path)
 
 
-def open_url(url):
+def save_url(url):
+    """
+    Set the last URL as a vim variable for later access
+    """
+    vim.vars["gist_last_gist_url"] = url
+
+
+def open_last_url():
+    """
+    Get the last URL from vim and open it
+    """
+    url = vim.vars.get("gist_last_gist_url", "")
+    open_url(url, browser=True)
+
+
+def open_url(url, browser=False):
     """
     Open the URL in the browser
     """
+    if not url:
+        print("No stored Gist URL")
+        return
+
     vim.command("redraw!")
     print(url)
-    switch = vim.vars.get("gist_should_open_url", 1) == 1
-    if switch:
-        subprocess.call(["open", url])
+
+    if not browser:
+        return
+
+    prg = executable()
+    if not prg:
+        print("No URL handler found see :help Gist for more info")
+        return
+
+    subprocess.call([prg, url])
 
 
 def executable():
@@ -111,13 +141,42 @@ def executable():
     system = sys.platform
     prg = None
     if system.startswith('darwin'):
-        prg = vim.vars.get("gist_executable_for_darwin", "open")
+        prg = vim.vars.get('gist_executable_for_darwin', 'open')
     elif system.startswith('linux'):
-        prg = vim.vars.get("gist_executable_for_linux", None)
+        prg = linux_executable()
+    elif system.startswith('cygwin'):
+        prg = vim.vars.get('gist_executable_for_cygwin', 'cygstart')
     elif system.startswith('win'):
-        prg = vim.vars.get("gist_executable_for_windows", "explorer")
+        prg = vim.vars.get('gist_executable_for_windows', 'explorer')
+
+    if not executable_exists(prg):
+        return None
 
     return prg
+
+
+def linux_executable():
+    """
+    Choose a linux executable if a known one exists
+    """
+    prg = vim.vars.get('gist_executable_for_linux', None)
+    if prg:
+        return prg
+
+    prgs = ['xdg-open', 'gvfs-open', 'gnome-open']
+    for t in prgs:
+        if executable_exists(t):
+            return t
+
+    return prg
+
+
+def executable_exists(prg):
+    """
+    Make sure an executable exists. If python 3 ever becomes
+    the norm there is a better method for this
+    """
+    return distutils.spawn.find_executable(prg)
 
 
 def get_description():
@@ -125,7 +184,10 @@ def get_description():
     Ask the user for a description of the gist
     """
     vim.eval("inputsave()")
-    desc = vim.eval("inputdialog('Description: ')")
+    try:
+        desc = vim.eval("inputdialog('Description: ')")
+    except KeyboardInterrupt:
+        exit(0)
     vim.eval("inputrestore()")
     vim.command("redraw!")
     return desc
@@ -144,13 +206,13 @@ def get_files(args):
         return files
 
     bufs = [b]
-    if args.all:
-        bufs = []
-        for tab in vim.tabpages:
-            for win in tab.windows:
-                b = win.buffer
-                if not is_directory(b):
-                    bufs.append(b)
+    # if args.all:
+    #     bufs = []
+    #     for tab in vim.tabpages:
+    #         for win in tab.windows:
+    #             b = win.buffer
+    #             if not is_directory(b):
+    #                 bufs.append(b)
 
     for b in bufs:
         files[buffer_filename(b)] = text_from_buffer(b, 0, len(b))
@@ -189,11 +251,12 @@ if __name__ == "__main__":
     parser.add_argument('--line1', type=int, metavar='start')
     parser.add_argument('--line2', type=int, metavar='end')
     private_default = vim.vars.get("gist_default_private", 0) == 1
+    open_default = vim.vars.get("gist_should_open_url", 1) == 1
     parser.add_argument('-P', '--public', action='store_true',
                         dest='public', default=(not private_default))
     parser.add_argument('-p', '--private', action='store_false',
                         dest='public')
-    parser.add_argument('-a', '--all', action='store_true',
+    parser.add_argument('-a', '--anonymous', action='store_true',
                         default=False)
-    parser.add_argument('-A', '--anonymous', action='store_true',
-                        default=False)
+    parser.add_argument('-o', '--open', action='store_true',
+                        dest='open_browser', default=open_default)
