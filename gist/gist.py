@@ -10,7 +10,8 @@ import os
 import os.path
 import urllib2
 import vim
-import webbrowser
+import subprocess
+import sys
 
 
 def main(args):
@@ -100,7 +101,23 @@ def open_url(url):
     print(url)
     switch = vim.vars.get("gist_should_open_url", 1) == 1
     if switch:
-        webbrowser.open(url)
+        subprocess.call(["open", url])
+
+
+def executable():
+    """
+    Get the executable used to open the URL
+    """
+    system = sys.platform
+    prg = None
+    if system.startswith('darwin'):
+        prg = vim.vars.get("gist_executable_for_darwin", "open")
+    elif system.startswith('linux'):
+        prg = vim.vars.get("gist_executable_for_linux", None)
+    elif system.startswith('win'):
+        prg = vim.vars.get("gist_executable_for_windows", "explorer")
+
+    return prg
 
 
 def get_description():
