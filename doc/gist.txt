@@ -15,6 +15,7 @@ CONTENTS                                                                *gist*
 1. Intro                                                          *gist-intro*
 
 Gist.vim, as expected, is a plugin for creating gists straight from Vim.
+Gist.vim requires Vim to be compiled with +python.
 
 This plugin adds two commands which are explained later:
 
