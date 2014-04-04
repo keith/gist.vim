@@ -20,6 +20,23 @@ function! s:LoadPythonScript()
   execute 'pyfile ' . script
 endfunction
 
+function! s:CompleteArguments(ArgLead, CmdLine, CursorPos)
+  let long = [
+        \ '--public',
+        \ '--private',
+        \ '--anonymous',
+        \ '--open'
+      \ ]
+  let short = [
+        \ '-P',
+        \ '-p',
+        \ '-a',
+        \ '-o'
+      \ ]
+
+  return short + long
+endfunction
+
 " Pass the arguments from the Vim CLI to python
 function! s:Gist(count, line1, line2, ...)
   let args = a:000 + ["--count", a:count] +
@@ -39,5 +56,6 @@ function! s:GistOpenLast()
   endtry
 endfunction
 
-command! -nargs=? -range=% Gist call s:Gist(<count>, <line1>, <line2>, <f-args>)
-command!                   GistOpenLast call s:GistOpenLast()
+command! -nargs=? -range=% -complete=customlist,s:CompleteArguments
+      \ Gist call s:Gist(<count>, <line1>, <line2>, <f-args>)
+command! GistOpenLast call s:GistOpenLast()
