@@ -31,7 +31,7 @@ def main(args):
 
     try:
         pipe = urllib2.urlopen(request, json.dumps(data))
-    except urllib2.HTTPError, e:
+    except urllib2.HTTPError as e:
         print(str(e.reason))
         return
 
@@ -39,7 +39,7 @@ def main(args):
     pipe.close()
     try:
         j = json.loads(response)
-    except ValueError:
+    except(ValueError):
         print("Failed to decode the response to JSON")
     else:
         url = j["html_url"]
@@ -186,7 +186,7 @@ def get_description():
     vim.eval("inputsave()")
     try:
         desc = vim.eval("inputdialog('Description: ')")
-    except KeyboardInterrupt:
+    except(KeyboardInterrupt):
         exit(0)
     vim.eval("inputrestore()")
     vim.command("redraw!")
