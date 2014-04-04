@@ -29,6 +29,7 @@ This plugin adds two commands which are explained later:
 The two commands are relatively simple. First off:
 
     :Gist [-pPao] [DESCRIPTION]
+    :'<,'>Gist [-pPao] [DESCRIPTION]
 
 This takes multiple options each with have a long and short flag.
 
@@ -50,6 +51,10 @@ This takes multiple options each with have a long and short flag.
 
     Filenames: The filename for the gist is pulled from the filename from
                Vim.
+
+    Range: As you can see the command can also take an optional range given
+           by a visual selection. In this case only that text will be used
+           for the gist.
 
 
 Credentials are pulled from your ~/.netrc file. You can change the default
