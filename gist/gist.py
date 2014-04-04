@@ -141,7 +141,7 @@ def executable():
     system = sys.platform
     prg = None
     if system.startswith('darwin'):
-        prg = vim.vars.get('gist_executable_for_darwin', 'open')
+        prg = vim.vars.get('gist_executable_for_mac', 'open')
     elif system.startswith('linux'):
         prg = linux_executable()
     elif system.startswith('cygwin'):
@@ -251,7 +251,7 @@ if __name__ == "__main__":
     parser.add_argument('--line1', type=int, metavar='start')
     parser.add_argument('--line2', type=int, metavar='end')
     private_default = vim.vars.get("gist_default_private", 0) == 1
-    open_default = vim.vars.get("gist_should_open_url", 1) == 1
+    open_default = vim.vars.get("gist_open_url", 1) == 1
     parser.add_argument('-P', '--public', action='store_true',
                         dest='public', default=(not private_default))
     parser.add_argument('-p', '--private', action='store_false',
