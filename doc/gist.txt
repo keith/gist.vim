@@ -1,0 +1,149 @@
+*gist.txt*                                               Last change: 2014 Apr
+
+
+CONTENTS                                                                *gist*
+
+    1. Intro.................................................|gist-intro|
+    2. Usage.................................................|gist-usage|
+    3. Configuration Options.........................|gist-configuration|
+    4. License.............................................|gist-license|
+    5. Related.............................................|gist-related|
+
+
+==============================================================================
+
+1. Intro                                                          *gist-intro*
+
+Gist.vim, as expected, is a plugin for creating gists straight from Vim.
+
+This plugin adds two commands which are explained later:
+
+    :Gist
+    :GistOpenLast
+
+
+==============================================================================
+
+2. Usage                                                          *gist-usage*
+
+The two commands are relatively simple. First off:
+
+    :Gist [-pPao] [DESCRIPTION]
+
+This takes multiple options each with have a long and short flag.
+
+    -P, --public: This creates a public Gist. This is the default.
+                  See |gist_default_private| to change this default.
+
+    -p, --private: This creates a private gist. Public is the default.
+                   See |gist_default_private| to change this default.
+
+    -a, --anonymous: Create a anonymous gist.
+
+    -o, --open: Open the created Gist in the browser after it's created.
+                This is on by default.
+                See |gist_open_url| to change this default.
+
+    Description: Any other information passed on the command line will be
+                 used as the description for the Gist. If nothing else is
+                 passed you will be prompted for a description.
+
+    Filenames: The filename for the gist is pulled from the filename from
+               Vim.
+
+
+Credentials are pulled from your ~/.netrc file. You can change the default
+location with |gist_netrc_path|. They need to be in this format:
+
+    machine <api.github.com>
+        login <Username>
+        password <Password>
+
+The URL can vary based on your |gist_base_url|.
+
+
+The other command is very simple:
+
+    :GistOpenLast
+
+This command takes no arguments. It opens the last created Gist in the
+browser. This can be useful if you create an anonymous gist without opening it
+immediately, or if you just want the convenience.
+
+
+==============================================================================
+
+3. Configuration Options                                  *gist-configuration*
+
+Gist.vim allows you to configure all the default arguments for the :Gist
+command.
+
+                                                               *gist_open_url*
+Default: 1
+Automatically open newly created gists in the browser
+
+                                                        *gist_default_private*
+Default: 0
+Create gists as private by default.
+
+                                                             *gist_netrc_path*
+Default: "~/.netrc"
+The default path for the netrc file to read your Github credentials from. If
+you decide to change this path make sure to give it something absolute.
+
+                                              *gist_executable_for_<platform>*
+Default: Mac:     "open"
+         Linux:   ["xdg-open", "gvfs-open", "gnome-open"]
+         Cygwin:  "cygstart"
+         Windows: "explorer"
+
+Use the above keywords (lowercased) and assign a single string with either a
+path or just an executable (if Vim's path is correct) to use to open the
+browser. Another reasonable example may be google-chrome. If the given
+executable cannot be found by python through Vim an error will raised.
+
+                                                               *gist_base_url*
+Default: "https://api.github.com/"
+The default API URL to try and post this gist. This is intended to be
+changeable for enterprise users although I have no idea how that works.
+
+
+==============================================================================
+
+4. License                                               *investigate-license*
+
+Investigate is licensed under MIT. The full text (as found in LICENSE):
+
+Copyright (c) 2014 Keith Smiley (http://keith.so)
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the 'Software'), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+==============================================================================
+
+5. Related Works                                                *gist-related*
+
+The original awesome Gist plugin. This requires a webapi implementation by
+the same author. Gist.vim depends on +python instead.
+
+@mattn     - https://github.com/mattn/gist-vim
+
+
+==============================================================================
+
+  vim:tw=78:et:ft=help:norl:isk+=-:ts=4:sw=4:sts=4
