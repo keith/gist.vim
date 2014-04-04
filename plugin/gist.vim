@@ -8,17 +8,19 @@ endif
 let g:loaded_gist = 1
 let s:plug = expand("<sfile>:p:h:h")
 
-if !has('python') && !has('python3')
+" There are too many differences with python 3 for me to want and try
+" to support it at this point
+if !has('python') " && !has('python3')
   echomsg "Gist.vim requires Vim compiled with +python"
   finish
 endif
 
 let s:python_version = 'python'
 let s:pyfile_version = 'pyfile'
-if has('python3')
-  let s:python_version .= '3'
-  let s:pyfile_version = 'py3file'
-endif
+" if has('python3')
+"   let s:python_version .= '3'
+"   let s:pyfile_version = 'py3file'
+" endif
 
 
 function! s:LoadPythonScript()
