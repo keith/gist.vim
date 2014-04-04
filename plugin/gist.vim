@@ -8,6 +8,19 @@ endif
 let g:loaded_gist = 1
 let s:plug = expand("<sfile>:p:h:h")
 
+if !has('python') && !has('python3')
+  echomsg "Gist.vim requires Vim compiled with +python"
+  finish
+endif
+
+let s:python_version = 'python'
+let s:pyfile_version = 'pyfile'
+if has('python3')
+  let s:python_version .= '3'
+  let s:pyfile_version = 'py3file'
+endif
+
+
 function! s:LoadPythonScript()
   if exists('s:loaded_gist_python') && s:loaded_gist_python
     return
@@ -15,9 +28,9 @@ function! s:LoadPythonScript()
   let s:loaded_gist_python = 1
 
   let script = s:plug . '/gist/gist.py'
-  execute 'python import sys'
-  execute 'python sys.path.append("' . s:plug . '")'
-  execute 'pyfile ' . script
+  execute s:python_version . ' import sys'
+  execute s:python_version . ' sys.path.append("' . s:plug . '")'
+  execute s:pyfile_version . ' ' . script
 endfunction
 
 function! s:CompleteArguments(ArgLead, CmdLine, CursorPos)
@@ -43,7 +56,7 @@ function! s:Gist(count, line1, line2, ...)
         \ ["--line1", a:line1] + ["--line2", a:line2]
   try
     call s:LoadPythonScript()
-    execute 'python main("' . join(args, " ") . '")'
+    execute s:python_version . ' main("' . join(args, " ") . '")'
   catch /^Vim\%((\a\+)\)\=:E880/
   endtry
 endfunction
@@ -51,7 +64,7 @@ endfunction
 function! s:GistOpenLast()
   try
     call s:LoadPythonScript()
-    execute 'python open_last_url()'
+    execute s:python_version . ' open_last_url()'
   catch /^Vim\%((\a\+)\)\=:E880/
   endtry
 endfunction
