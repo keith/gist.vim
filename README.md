@@ -7,6 +7,9 @@ documented](https://github.com/Keithbsmiley/gist.vim/blob/master/doc/gist.txt).
 
 **Note:** Gist.vim requires Vim to be compiled with `+python`.
 
+
+## Usage
+
 This plugin adds two commands:
 
 ```
