@@ -19,6 +19,8 @@ import vim
 def main(args):
     name, unknown = parser.parse_known_args(args.split())
     data = data_for_args(name, unknown)
+    if not data:
+        return
 
     u = None
     if not name.anonymous:
@@ -67,6 +69,9 @@ def data_for_args(name, unknown):
     desc = ' '.join(unknown)
     if not desc:
         desc = get_description()
+    if not desc:
+        print("You must enter a description")
+        return None
     data['description'] = desc
     return data
 
@@ -184,10 +189,7 @@ def get_description():
     Ask the user for a description of the gist
     """
     vim.eval("inputsave()")
-    try:
-        desc = vim.eval("inputdialog('Description: ')")
-    except(KeyboardInterrupt):
-        exit(0)
+    desc = vim.eval("inputdialog('Description: ')")
     vim.eval("inputrestore()")
     vim.command("redraw!")
     return desc
