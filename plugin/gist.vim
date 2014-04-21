@@ -17,11 +17,11 @@ if !has('python') " && !has('python3')
   finish
 endif
 
-let s:python_version = 'python'
-let s:pyfile_version = 'pyfile'
+let s:python_version = 'python '
+let s:pyfile_version = 'pyfile '
 " if has('python3')
-"   let s:python_version .= '3'
-"   let s:pyfile_version = 'py3file'
+"   let s:python_version = 'python3 '
+"   let s:pyfile_version = 'py3file '
 " endif
 
 function! s:LoadPythonScript()
@@ -31,9 +31,9 @@ function! s:LoadPythonScript()
   let s:loaded_gist_python = 1
 
   let script = s:plug . '/gist/gist.py'
-  execute s:python_version . ' import sys'
-  execute s:python_version . ' sys.path.append("' . s:plug . '")'
-  execute s:pyfile_version . ' ' . script
+  execute s:python_version . 'import sys'
+  execute s:python_version . 'sys.path.append("' . s:plug . '")'
+  execute s:pyfile_version . script
 endfunction
 
 function! s:CompleteArguments(ArgLead, CmdLine, CursorPos)
