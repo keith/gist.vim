@@ -58,28 +58,5 @@ If you're using two factor auth, provide a personal access token from
 By default the gist is opened in the browser upon creation. You can
 change this default by setting `g:gist_open_url` to 0.
 
-## Installation
-
-### With [Vundle](https://github.com/gmarik/vundle)
-
-Add:
-
-```
-Bundle 'Keithbsmiley/gist.vim'
-```
-
-To your `.vimrc` and run `BundleInstall` from within vim or `vim +BundleInstall +qall` from the command line
-
-### With [Pathogen](https://github.com/tpope/vim-pathogen)
-
-```
-cd ~/.vim/bundle
-git clone https://github.com/Keithbsmiley/gist.vim.git
-```
-
-To generate the helptags afterwards run `:Helptags`
-
-## Development
-
-If you find any bugs or want any features added please submit an
-[issue](https://github.com/Keithbsmiley/gist.vim/issues/new).
+If you don't have a preferred installation method check out
+[vim-plug](https://github.com/junegunn/vim-plug)
