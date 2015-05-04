@@ -2,7 +2,7 @@
 
 Gist.vim, as expected, is a plugin for creating gists straight from Vim.
 It is also [well
-documented](https://github.com/Keithbsmiley/gist.vim/blob/master/doc/gist.txt).
+documented](https://github.com/keith/gist.vim/blob/master/doc/gist.txt).
 
 
 **Note:** Gist.vim requires Vim to be compiled with `+python`.
