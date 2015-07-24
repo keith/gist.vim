@@ -34,7 +34,10 @@ def main(args):
     try:
         pipe = urllib2.urlopen(request, json.dumps(data))
     except urllib2.HTTPError as e:
-        print(str(e.reason))
+        if e.getcode():
+            print("Got 404, update your token to with the gist scope")
+        else:
+            print(str(e.reason))
         return
 
     response = pipe.read()
