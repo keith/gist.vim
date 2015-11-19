@@ -6,13 +6,13 @@ if exists('g:loaded_gist') && g:loaded_gist
   finish
 endif
 let g:loaded_gist = 1
-let s:plug = expand("<sfile>:p:h:h")
+let s:plug = expand('<sfile>:p:h:h')
 
 " There are too many differences with python 3 for me to want and try
 " to support it at this point
 if !has('python') " && !has('python3')
   command! Gist :echohl ErrorMsg |
-        \ echo "Gist.vim requires Vim compiled with +python" |
+        \ echo 'Gist.vim requires Vim compiled with +python' |
         \ echohl None<CR>
   finish
 endif
@@ -30,36 +30,28 @@ function! s:LoadPythonScript()
   endif
   let s:loaded_gist_python = 1
 
-  let script = s:plug . '/gist/gist.py'
+  let l:script = s:plug . '/gist/gist.py'
   execute s:python_version . 'import sys'
   execute s:python_version . 'sys.path.append("' . s:plug . '")'
-  execute s:pyfile_version . script
+  execute s:pyfile_version . l:script
 endfunction
 
 function! s:CompleteArguments(ArgLead, CmdLine, CursorPos)
-  let long = [
+  return [
         \ '--public',
         \ '--private',
         \ '--anonymous',
         \ '--open'
       \ ]
-  let short = [
-        \ '-P',
-        \ '-p',
-        \ '-a',
-        \ '-o'
-      \ ]
-
-  return short + long
 endfunction
 
 " Pass the arguments from the Vim CLI to python
 function! s:Gist(count, line1, line2, ...)
-  let args = a:000 + ["--count", a:count] +
-        \ ["--line1", a:line1] + ["--line2", a:line2]
+  let l:args = a:000 + ['--count', a:count] +
+        \ ['--line1', a:line1] + ['--line2', a:line2]
   try
     call s:LoadPythonScript()
-    execute s:python_version . ' main("' . join(args, " ") . '")'
+    execute s:python_version . ' main("' . join(l:args, ' ') . '")'
   catch /^Vim\%((\a\+)\)\=:E880/
   endtry
 endfunction

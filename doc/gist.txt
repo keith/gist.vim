@@ -34,17 +34,17 @@ The two commands are relatively simple. First off:
 
 This takes multiple options each with have a long and short flag.
 
-    -P, --public: This creates a public Gist. This is the default.
-                  See |gist_default_private| to change this default.
+    --public: This creates a public Gist. This is the default.
+              See |gist_default_private| to change this default.
 
-    -p, --private: This creates a private gist. Public is the default.
-                   See |gist_default_private| to change this default.
+    --private: This creates a private gist. Public is the default.
+               See |gist_default_private| to change this default.
 
-    -a, --anonymous: Create a anonymous gist.
+    --anonymous: Create a anonymous gist.
 
-    -o, --open: Open the created Gist in the browser after it's created.
-                This is on by default.
-                See |gist_open_url| to change this default.
+    --open: Open the created Gist in the browser after it's created.
+            This is on by default.
+            See |gist_open_url| to change this default.
 
     Description: Any other information passed on the command line will be
                  used as the description for the Gist. If nothing else is
