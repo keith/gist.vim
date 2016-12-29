@@ -117,7 +117,7 @@ def open_url(url, browser=False):
     Open the URL in the browser
     """
     if not url:
-        print("No stored Gist URL")
+        print("No Gist URL")
         return
 
     vim.command("redraw!")
