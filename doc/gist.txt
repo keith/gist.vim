@@ -92,17 +92,6 @@ Automatically open newly created gists in the browser
 Default: 0
 Create gists as private by default.
 
-                                              *gist_executable_for_<platform>*
-Default: Mac:     "open"
-         Linux:   ["xdg-open", "gvfs-open", "gnome-open"]
-         Cygwin:  "cygstart"
-         Windows: "explorer"
-
-Use the above keywords (lowercased) and assign a single string with either a
-path or just an executable (if Vim's path is correct) to use to open the
-browser. Another reasonable example may be google-chrome. If the given
-executable cannot be found by python through Vim an error will raised.
-
                                                                *gist_base_url*
 Default: "https://api.github.com/"
 The default API URL to try and post this gist. This is intended to be
@@ -115,7 +104,7 @@ changeable for enterprise users although I have no idea how that works.
 
 Investigate is licensed under MIT. The full text (as found in LICENSE):
 
-Copyright (c) 2014 Keith Smiley (http://keith.so)
+Copyright (c) 2017 Keith Smiley (http://keith.so)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the 'Software'), to deal
 in the Software without restriction, including without limitation the rights

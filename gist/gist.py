@@ -6,14 +6,12 @@ Maintained by: Keith Smiley <http://keith.so>
 from gist.auth.user import User
 import argparse
 import base64
-import distutils.spawn
 import json
 import os
 import os.path
-import subprocess
-import sys
 import urllib2
 import vim
+import webbrowser
 
 
 def main(args):
@@ -123,60 +121,8 @@ def open_url(url, browser=False):
     vim.command("redraw!")
     print(url)
 
-    if not browser:
-        return
-
-    prg = executable()
-    if not prg:
-        print("No URL handler found see :help Gist for more info")
-        return
-
-    subprocess.call([prg, url])
-
-
-def executable():
-    """
-    Get the executable used to open the URL
-    """
-    system = sys.platform
-    prg = None
-    if system.startswith('darwin'):
-        prg = vim.vars.get('gist_executable_for_mac', 'open')
-    elif system.startswith('linux'):
-        prg = linux_executable()
-    elif system.startswith('cygwin'):
-        prg = vim.vars.get('gist_executable_for_cygwin', 'cygstart')
-    elif system.startswith('win'):
-        prg = vim.vars.get('gist_executable_for_windows', 'explorer')
-
-    if not executable_exists(prg):
-        return None
-
-    return prg
-
-
-def linux_executable():
-    """
-    Choose a linux executable if a known one exists
-    """
-    prg = vim.vars.get('gist_executable_for_linux', None)
-    if prg:
-        return prg
-
-    prgs = ['xdg-open', 'gvfs-open', 'gnome-open']
-    for t in prgs:
-        if executable_exists(t):
-            return t
-
-    return prg
-
-
-def executable_exists(prg):
-    """
-    Make sure an executable exists. If python 3 ever becomes
-    the norm there is a better method for this
-    """
-    return distutils.spawn.find_executable(prg)
+    if browser:
+        webbrowser.open_new_tab(url)
 
 
 def get_description():
