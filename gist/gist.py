@@ -39,6 +39,9 @@ def main(args):
         else:
             print(str(e.reason))
         return
+    except urllib2.URLError as e:
+        print(e.reason)
+        return
 
     response = pipe.read()
     pipe.close()
