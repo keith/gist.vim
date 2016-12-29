@@ -3,7 +3,7 @@ Create gists straight from Vim
 Maintained by: Keith Smiley <http://keith.so>
 """
 
-from gist.auth import user
+from gist.auth.user import User
 import argparse
 import base64
 import distutils.spawn
@@ -22,13 +22,13 @@ def main(args):
     if not data:
         return
 
-    u = None
+    user = None
     if not name.anonymous:
-        u = User.from_netrc(url=github_url())
-        if not u:
+        user = User.from_netrc(url=github_url())
+        if not user:
             print("No user with machine %s" % github_url())
             return
-    request = request_for_user(u)
+    request = request_for_user(user)
 
     try:
         pipe = urllib2.urlopen(request, json.dumps(data))
@@ -71,20 +71,20 @@ def data_for_args(name, unknown):
     return data
 
 
-def auth_for_user(u):
+def auth_for_user(user):
     """
     Formats the base64 string based on a user
     """
-    return base64.standard_b64encode("%s:%s" % (u.username, u.password))
+    return base64.standard_b64encode("%s:%s" % (user.username, user.password))
 
 
-def request_for_user(u):
+def request_for_user(user):
     """
     Creates the URL request with the credentials
     """
     request = urllib2.Request(github_url("gists"))
-    if u:
-        auth = auth_for_user(u)
+    if user:
+        auth = auth_for_user(user)
         request.add_header("Authorization", "Basic %s" % auth)
     return request
 
