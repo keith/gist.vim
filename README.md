@@ -45,7 +45,7 @@ Credentials are pulled from your `~/.netrc` file. They need to be in
 this format: (The URL can vary based on your `g:gist_base_url`)
 
 ```
-machine <api.github.com>
+machine api.github.com
   login <Username>
   password <Password>
 ```

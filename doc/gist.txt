@@ -61,7 +61,7 @@ This takes multiple options each with have a long and short flag.
 Credentials are pulled from your ~/.netrc file. They need to be in this
 format:
 
-    machine <api.github.com>
+    machine api.github.com
         login <Username>
         password <Password>
 
