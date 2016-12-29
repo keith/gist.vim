@@ -58,8 +58,8 @@ This takes multiple options each with have a long and short flag.
            for the gist.
 
 
-Credentials are pulled from your ~/.netrc file. You can change the default
-location with |gist_netrc_path|. They need to be in this format:
+Credentials are pulled from your ~/.netrc file. They need to be in this
+format:
 
     machine <api.github.com>
         login <Username>
@@ -91,11 +91,6 @@ Automatically open newly created gists in the browser
                                                         *gist_default_private*
 Default: 0
 Create gists as private by default.
-
-                                                             *gist_netrc_path*
-Default: "~/.netrc"
-The default path for the netrc file to read your Github credentials from. If
-you decide to change this path make sure to give it something absolute.
 
                                               *gist_executable_for_<platform>*
 Default: Mac:     "open"

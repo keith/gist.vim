@@ -24,10 +24,9 @@ def main(args):
 
     u = None
     if not name.anonymous:
-        u = user.User.from_netrc(url=github_url(), path=netrc_path())
+        u = User.from_netrc(url=github_url())
         if not u:
-            print("No user in %s with machine %s" %
-                  (netrc_path(True), github_url()))
+            print("No user with machine %s" % github_url())
             return
     request = request_for_user(u)
 
@@ -54,16 +53,6 @@ def main(args):
         open_url(url, browser=name.open_browser)
         save_url(url)
 
-
-def netrc_path(default=False):
-    """
-    Return the settings based netrc path
-    """
-    path = vim.vars.get("gist_netrc_path", None)
-    if not path and default:
-        path = os.path.join(os.path.expanduser("~"), ".netrc")
-
-    return path
 
 
 def data_for_args(name, unknown):

@@ -41,9 +41,8 @@ text you will be prompted for a description.
           See g:gist_open_url to change this default.
 ```
 
-Credentials are pulled from your `~/.netrc` file. You can change the default
-location with `g:gist_netrc_path`. They need to be in this format:
-(The URL can vary based on your `g:gist_base_url`)
+Credentials are pulled from your `~/.netrc` file. They need to be in
+this format: (The URL can vary based on your `g:gist_base_url`)
 
 ```
 machine <api.github.com>

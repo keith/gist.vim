@@ -17,19 +17,20 @@ class User(object):
 
     @classmethod
     def from_netrc(cls, path=None, url=None):
-        rc = netrc.netrc(path)
         parsed_url = urlparse.urlparse(url)
         base_url = parsed_url.netloc
         if not base_url:
             base_url = parsed_url.path
         if not base_url:
             base_url = url
-        creds = rc.authenticators(base_url)
-        if not creds:
+
+        credential = netrc.netrc(path).authenticators(base_url)
+        if not credential:
             return None
-        login, account, password = creds
+        login, account, password = credential
         if not login:
             login = account
         if not login or not password:
             return None
+
         return User(login, password, url)
