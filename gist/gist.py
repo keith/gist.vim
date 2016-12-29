@@ -45,14 +45,14 @@ def main(args):
     response = pipe.read()
     pipe.close()
     try:
-        j = json.loads(response)
+        response_json = json.loads(response)
     except(ValueError):
         print("Failed to decode the response to JSON")
-    else:
-        url = j["html_url"]
-        open_url(url, browser=name.open_browser)
-        save_url(url)
+        return
 
+    url = response_json["html_url"]
+    open_url(url, browser=name.open_browser)
+    save_url(url)
 
 
 def data_for_args(name, unknown):
