@@ -68,13 +68,14 @@ format:
 The URL can vary based on your |gist_base_url|.
 
 
-The other command is very simple:
+The other commands are very simple:
 
     :GistOpenLast
+    :GistCopyLast
 
-This command takes no arguments. It opens the last created Gist in the
-browser. This can be useful if you create an anonymous gist without opening it
-immediately, or if you just want the convenience.
+These commands takes no arguments. They copy or open the last created Gist in
+the browser. This can be useful if you create an anonymous gist without
+copying or opening it immediately, or if you just want the convenience.
 
 
 ==============================================================================
@@ -87,6 +88,14 @@ command.
                                                                *gist_open_url*
 Default: 1
 Automatically open newly created gists in the browser
+
+                                                               *gist_copy_url*
+Default: 0
+Automatically copy newly created gist to the pasteboard
+
+                                                          *gist_yank_register*
+Default: "use clipboard register"
+Choose which register the URL copy is written to
 
                                                         *gist_default_private*
 Default: 0

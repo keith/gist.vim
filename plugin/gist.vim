@@ -64,6 +64,15 @@ function! s:GistOpenLast()
   endtry
 endfunction
 
+function! s:GistCopyLast()
+  try
+    call s:LoadPythonScript()
+    execute s:python_version . ' copy_last_url()'
+  catch /^Vim\%((\a\+)\)\=:E880/
+  endtry
+endfunction
+
 command! -nargs=? -range=% -complete=customlist,s:CompleteArguments
       \ Gist call s:Gist(<count>, <line1>, <line2>, <f-args>)
 command! GistOpenLast call s:GistOpenLast()
+command! GistCopyLast call s:GistCopyLast()
