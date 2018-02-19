@@ -40,7 +40,6 @@ function! s:CompleteArguments(ArgLead, CmdLine, CursorPos)
   return [
         \ '--public',
         \ '--private',
-        \ '--anonymous',
         \ '--open'
       \ ]
 endfunction

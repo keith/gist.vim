@@ -20,12 +20,11 @@ def main(args):
     if not data:
         return
 
-    user = None
-    if not name.anonymous:
-        user = User.from_netrc(url=github_url())
-        if not user:
-            print("No user with machine %s" % github_url())
-            return
+    user = User.from_netrc(url=github_url())
+    if not user:
+        print("No user with machine %s" % github_url())
+        return
+
     request = request_for_user(user)
 
     try:
@@ -237,8 +236,6 @@ if __name__ == "__main__":
                         dest='public', default=(not private_default))
     parser.add_argument('-p', '--private', action='store_false',
                         dest='public')
-    parser.add_argument('-a', '--anonymous', action='store_true',
-                        default=False)
     parser.add_argument('-o', '--open', action='store_true',
                         dest='open_browser', default=open_default)
     parser.add_argument('-y', '--yank', action='store_true',

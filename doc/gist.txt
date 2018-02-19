@@ -40,8 +40,6 @@ This takes multiple options each with have a long and short flag.
     --private: This creates a private gist. Public is the default.
                See |gist_default_private| to change this default.
 
-    --anonymous: Create a anonymous gist.
-
     --open: Open the created Gist in the browser after it's created.
             This is on by default.
             See |gist_open_url| to change this default.
@@ -74,8 +72,7 @@ The other commands are very simple:
     :GistCopyLast
 
 These commands takes no arguments. They copy or open the last created Gist in
-the browser. This can be useful if you create an anonymous gist without
-copying or opening it immediately, or if you just want the convenience.
+the browser.
 
 
 ==============================================================================

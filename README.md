@@ -34,8 +34,6 @@ text you will be prompted for a description.
 -p, --private: This creates a private gist. Public is the default.
               See g:gist_default_private to change this default.
 
--a, --anonymous: Create a anonymous gist.
-
 -o, --open: Open the created Gist in the browser after it's created.
           This is on by default.
           See g:gist_open_url to change this default.
