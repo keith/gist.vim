@@ -50,5 +50,6 @@ def make_user():
     os.remove(name)
     return u
 
+
 if __name__ == "__main__":
     unittest.main()

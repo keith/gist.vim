@@ -26,10 +26,14 @@ def main(args):
         return
 
     request = urllib.request.Request(github_url("gists"))
-    request.add_header("Authorization", "Basic %s" % auth_for_user(user).decode())
+    request.add_header(
+        "Authorization", "Basic %s" % auth_for_user(user).decode()
+    )
 
     try:
-        pipe = urllib.request.urlopen(request, json.dumps(data).encode("utf-8"))
+        pipe = urllib.request.urlopen(
+            request, json.dumps(data).encode("utf-8")
+        )
     except urllib.request.HTTPError as e:
         if e.getcode() == 404:
             print("Got 404, update your token to with the gist scope")
@@ -44,7 +48,7 @@ def main(args):
     pipe.close()
     try:
         response_json = json.loads(response)
-    except(ValueError):
+    except (ValueError):
         print("Failed to decode the response to JSON")
         return
 
@@ -60,15 +64,15 @@ def data_for_args(name, unknown):
     """
     Returns the hash for the given arguments
     """
-    data = {'public': name.public}
-    data['files'] = get_files(name)
-    desc = ' '.join(unknown)
+    data = {"public": name.public}
+    data["files"] = get_files(name)
+    desc = " ".join(unknown)
     if not desc:
         desc = get_description()
     if not desc:
         print("You must enter a description")
         return None
-    data['description'] = desc
+    data["description"] = desc
     return data
 
 
@@ -76,7 +80,9 @@ def auth_for_user(user):
     """
     Formats the base64 string based on a user
     """
-    return base64.standard_b64encode("{}:{}".format(user.username, user.password).encode())
+    return base64.standard_b64encode(
+        "{}:{}".format(user.username, user.password).encode()
+    )
 
 
 def github_url(path=""):
@@ -133,7 +139,7 @@ def copy_url(url):
         print("No Gist URL")
         return
 
-    vim.command("let @%s = \"%s\"" % (_get_yank_register(), url))
+    vim.command('let @%s = "%s"' % (_get_yank_register(), url))
 
 
 def _get_yank_register():
@@ -197,7 +203,7 @@ def text_from_buffer(b, l1, l2):
     """
     if l1 > 0:
         l1 -= 1
-    return {'content': '\n'.join(b[l1:l2])}
+    return {"content": "\n".join(b[l1:l2])}
 
 
 def buffer_filename(b):
@@ -216,17 +222,31 @@ def is_directory(b):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--count', type=int)
-    parser.add_argument('--line1', type=int, metavar='start')
-    parser.add_argument('--line2', type=int, metavar='end')
+    parser.add_argument("-c", "--count", type=int)
+    parser.add_argument("--line1", type=int, metavar="start")
+    parser.add_argument("--line2", type=int, metavar="end")
     private_default = vim.vars.get("gist_default_private", 0) == 1
     open_default = vim.vars.get("gist_open_url", 1) == 1
     copy_default = vim.vars.get("gist_copy_url", 0) == 1
-    parser.add_argument('-P', '--public', action='store_true',
-                        dest='public', default=(not private_default))
-    parser.add_argument('-p', '--private', action='store_false',
-                        dest='public')
-    parser.add_argument('-o', '--open', action='store_true',
-                        dest='open_browser', default=open_default)
-    parser.add_argument('-y', '--yank', action='store_true',
-                        dest='copy_url', default=copy_default)
+    parser.add_argument(
+        "-P",
+        "--public",
+        action="store_true",
+        dest="public",
+        default=(not private_default),
+    )
+    parser.add_argument("-p", "--private", action="store_false", dest="public")
+    parser.add_argument(
+        "-o",
+        "--open",
+        action="store_true",
+        dest="open_browser",
+        default=open_default,
+    )
+    parser.add_argument(
+        "-y",
+        "--yank",
+        action="store_true",
+        dest="copy_url",
+        default=copy_default,
+    )
