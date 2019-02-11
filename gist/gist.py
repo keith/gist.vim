@@ -9,7 +9,7 @@ import base64
 import json
 import os
 import os.path
-import urllib2
+import urllib.request
 import vim
 import webbrowser
 
@@ -25,17 +25,18 @@ def main(args):
         print("No user with machine %s" % github_url())
         return
 
-    request = request_for_user(user)
+    request = urllib.request.Request(github_url("gists"))
+    request.add_header("Authorization", "Basic %s" % auth_for_user(user).decode())
 
     try:
-        pipe = urllib2.urlopen(request, json.dumps(data))
-    except urllib2.HTTPError as e:
-        if e.getcode():
+        pipe = urllib.request.urlopen(request, json.dumps(data).encode("utf-8"))
+    except urllib.request.HTTPError as e:
+        if e.getcode() == 404:
             print("Got 404, update your token to with the gist scope")
         else:
             print(str(e.reason))
         return
-    except urllib2.URLError as e:
+    except urllib.request.URLError as e:
         print(e.reason)
         return
 
@@ -75,18 +76,7 @@ def auth_for_user(user):
     """
     Formats the base64 string based on a user
     """
-    return base64.standard_b64encode("%s:%s" % (user.username, user.password))
-
-
-def request_for_user(user):
-    """
-    Creates the URL request with the credentials
-    """
-    request = urllib2.Request(github_url("gists"))
-    if user:
-        auth = auth_for_user(user)
-        request.add_header("Authorization", "Basic %s" % auth)
-    return request
+    return base64.standard_b64encode("{}:{}".format(user.username, user.password).encode())
 
 
 def github_url(path=""):

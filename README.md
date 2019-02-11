@@ -5,7 +5,7 @@ It is also [well
 documented](https://github.com/keith/gist.vim/blob/master/doc/gist.txt).
 
 
-**Note:** Gist.vim requires Vim to be compiled with `+python`.
+**Note:** Gist.vim requires Vim to be compiled with `+python3`.
 
 
 ## Usage

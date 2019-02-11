@@ -10,19 +10,15 @@ let s:plug = expand('<sfile>:p:h:h')
 
 " There are too many differences with python 3 for me to want and try
 " to support it at this point
-if !has('python') " && !has('python3')
+if !has('python3')
   command! Gist :echohl ErrorMsg |
         \ echo 'Gist.vim requires Vim compiled with +python' |
         \ echohl None<CR>
   finish
 endif
 
-let s:python_version = 'python '
-let s:pyfile_version = 'pyfile '
-" if has('python3')
-"   let s:python_version = 'python3 '
-"   let s:pyfile_version = 'py3file '
-" endif
+let s:python_version = 'python3 '
+let s:pyfile_version = 'py3file '
 
 function! s:LoadPythonScript()
   if exists('s:loaded_gist_python') && s:loaded_gist_python

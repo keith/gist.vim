@@ -3,7 +3,7 @@ Get users from the netrc credentials file for use with Github
 Maintained by: Keith Smiley <http://keith.so>
 """
 import netrc
-import urlparse
+import urllib.parse
 
 
 class User(object):
@@ -17,7 +17,7 @@ class User(object):
 
     @classmethod
     def from_netrc(cls, path=None, url=None):
-        parsed_url = urlparse.urlparse(url)
+        parsed_url = urllib.parse.urlparse(url)
         base_url = parsed_url.netloc
         if not base_url:
             base_url = parsed_url.path

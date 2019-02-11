@@ -25,7 +25,7 @@ class TestUsers(unittest.TestCase):
 
     def test_string(self):
         u = make_user()
-        self.assertRegexpMatches(u.__str__(), r".*Username: %s.*" % USERNAME)
+        self.assertRegex(u.__str__(), r".*Username: %s.*" % USERNAME)
 
     def test_creation(self):
         u = user.User(USERNAME, PASSWORD, URL)
