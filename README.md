@@ -4,9 +4,10 @@ Gist.vim, as expected, is a plugin for creating gists straight from Vim.
 It is also [well
 documented](https://github.com/keith/gist.vim/blob/master/doc/gist.txt).
 
+## Setup
 
-**Note:** Gist.vim requires Vim to be compiled with `+python3`.
-
+1. Install the [GitHub CLI](https://cli.github.com)
+2. Authenticate with `gh auth login`
 
 ## Usage
 
@@ -14,7 +15,6 @@ This plugin adds two commands:
 
 ```
 :Gist [-pPao] [DESCRIPTION]
-:GistOpenLast
 ```
 
 The Gist command creates a gist from the buffer you're currently
@@ -38,19 +38,6 @@ text you will be prompted for a description.
           This is on by default.
           See g:gist_open_url to change this default.
 ```
-
-Credentials are pulled from your `~/.netrc` file. They need to be in
-this format: (The URL can vary based on your `g:gist_base_url`)
-
-```
-machine api.github.com
-  login <Username>
-  password <Password>
-```
-
-If you're using two factor auth, provide a personal access token from
-[here](https://github.com/settings/applications) as the password.
-
 
 By default the gist is opened in the browser upon creation. You can
 change this default by setting `g:gist_open_url` to 0.
