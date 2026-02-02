@@ -15,12 +15,13 @@ CONTENTS                                                                *gist*
 1. Intro                                                          *gist-intro*
 
 Gist.vim, as expected, is a plugin for creating gists straight from Vim.
-Gist.vim requires Vim to be compiled with +python3.
+Gist.vim requires the GitHub CLI (gh) to be installed and authenticated.
+
+Install the GitHub CLI from https://cli.github.com/ and run `gh auth login`.
 
 This plugin adds two commands which are explained later:
 
     :Gist
-    :GistOpenLast
 
 
 ==============================================================================
@@ -56,25 +57,6 @@ This takes multiple options each with have a long and short flag.
            for the gist.
 
 
-Credentials are pulled from your ~/.netrc file. They need to be in this
-format:
-
-    machine api.github.com
-        login <Username>
-        password <Password>
-
-The URL can vary based on your |gist_base_url|.
-
-
-The other commands are very simple:
-
-    :GistOpenLast
-    :GistCopyLast
-
-These commands takes no arguments. They copy or open the last created Gist in
-the browser.
-
-
 ==============================================================================
 
 3. Configuration Options                                  *gist-configuration*
@@ -88,20 +70,11 @@ Automatically open newly created gists in the browser
 
                                                                *gist_copy_url*
 Default: 0
-Automatically copy newly created gist to the pasteboard
-
-                                                          *gist_yank_register*
-Default: "use clipboard register"
-Choose which register the URL copy is written to
+Automatically copy newly created gist to the clipboard
 
                                                         *gist_default_private*
 Default: 0
 Create gists as private by default.
-
-                                                               *gist_base_url*
-Default: "https://api.github.com/"
-The default API URL to try and post this gist. This is intended to be
-changeable for enterprise users although I have no idea how that works.
 
 
 ==============================================================================
@@ -110,7 +83,7 @@ changeable for enterprise users although I have no idea how that works.
 
 Investigate is licensed under MIT. The full text (as found in LICENSE):
 
-Copyright (c) 2017 Keith Smiley (http://keith.so)
+Copyright (c) 2026 Keith Smiley (http://keith.so)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the 'Software'), to deal
 in the Software without restriction, including without limitation the rights
@@ -134,8 +107,8 @@ SOFTWARE.
 
 5. Related Works                                                *gist-related*
 
-The original awesome Gist plugin. This requires a webapi implementation by
-the same author. Gist.vim depends on +python3 instead.
+The original Gist plugin. This requires a webapi implementation by
+the same author. Gist.vim uses the GitHub CLI instead.
 
 @mattn     - https://github.com/mattn/gist-vim
 
