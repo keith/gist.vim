@@ -30,7 +30,7 @@ class User(object):
         login, account, password = credential
         if not login:
             login = account
-        if not login or not password:
+        if not password:
             return None
 
         return User(login, password, url)
