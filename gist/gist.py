@@ -27,7 +27,7 @@ def main(args):
 
     request = urllib.request.Request(github_url("gists"))
     request.add_header(
-        "Authorization", "Basic %s" % auth_for_user(user).decode()
+        "Authorization", "Bearer %s" % user.password
     )
 
     try:
@@ -74,15 +74,6 @@ def data_for_args(name, unknown):
         return None
     data["description"] = desc
     return data
-
-
-def auth_for_user(user):
-    """
-    Formats the base64 string based on a user
-    """
-    return base64.standard_b64encode(
-        "{}:{}".format(user.username, user.password).encode()
-    )
 
 
 def github_url(path=""):
