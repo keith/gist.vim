@@ -96,8 +96,8 @@ function! s:Gist(line1, line2, ...) abort
     return
   endif
 
-  let l:url = split(get(l:result, -1, ''), ' ')[-1]
-  if match(l:url, '^https://') != 0
+  let l:url = matchstr(join(l:result, "\n"), 'https://[^[:space:]]\+')
+  if l:url ==# ''
     echohl ErrorMsg | echo 'Failed to get gist URL from gh output: ' . join(l:result, ' ') | echohl None
     return
   endif
@@ -107,7 +107,7 @@ function! s:Gist(line1, line2, ...) abort
 
   " Copy to clipboard if requested
   if l:opts.yank
-    let @+ = a:url
+    let @+ = l:url
   endif
 endfunction
 
